@@ -1,0 +1,69 @@
+---
+title: "1928-1969¶¡,¤p¨à³Â·ô¦b¬ü°ê¦U¦{ªºµo¥Í²vÅÜ¤Æ??Ÿç?‡è?Šå??"
+---
+
+#¸ê®Æ«e³B²z
+```{r warning=F,message=F}
+if (!require('ggplot2')){
+    install.packages("ggplot2")
+    library(ggplot2)
+}
+```
+
+##§â¸ê®ÆÅª¶i¨Ó
+```{r results='hide',warning=F,message=F}
+polio<-read.csv("POLIO_Incidence.csv",stringsAsFactors=F)
+head(polio)
+
+```
+
+##±N¼eªí®æÂà¬°ªøªí®æ
+```{r warning=F,message=F}
+library(reshape2)
+
+polio.m<-melt(polio,id.vars=c('YEAR','WEEK'))
+head(polio.m)
+```
+
+##³B²z¯Ê­È
+```{r warning=F,message=F}
+polio.m[polio.m$value=="-",]$value<-NA
+polio.m$value<-as.numeric(polio.m$value)
+```
+
+##­pºâ¦~«×µo¥Í²v
+```{r warning=F,message=F}
+polio.sumYear<-aggregate(value~YEAR+variable,data=polio.m,FUN=sum,na.rm=F)
+head(polio.sumYear)
+```
+#µøÄ±µe§e²{
+
+##¸ÑÄÀ¦p¦ó¿ï¾Ü¹Ï§ÎºØÃþ
+¿ï¾Ü"°Ï¶ôµÛ¦â"  ¥ª¤è¥i²M·¡Åã¥Ü«°¥«¦WºÙ
+¤U¤èªí¥Ü¦~¥÷    ¥k¤è«h³]©wÃC¦âªí¥Ü¼Æ¶q
+³o¼Ëªº¹Ï§ÎÅã¥Ü·|¤ñ§é½u¹Ï©Î¬OÂI¹Ï­n¨Óªº²M·¡³\¦h
+
+##µ{¦¡½X
+```{r fig.show='hide'}
+library(ggplot2)
+
+ggplot(polio.sumYear,aes(YEAR,variable))+
+geom_tile(aes(fill=value),colour="white")+
+scale_fill_gradient(low="lightyellow",high="blue")+#?•¸?€¼ä??:?™½?‰²
+geom_vline(xintercept = 1955,colour="black", linetype = "longdash")#?–«???
+
+```
+
+##¹Ï§Î§e²{
+```{r echo=F,warning=F,message=F}
+library(ggplot2)
+
+ggplot(polio.sumYear,aes(YEAR,variable))+
+geom_tile(aes(fill=value),colour="white")+
+scale_fill_gradient(low="lightyellow",high="blue")+#?•¸?€¼ä??:?™½?‰²
+geom_vline(xintercept = 1955,colour="black", linetype = "longdash")#?–«???
+
+```
+
+##¸ÑÄÀ¹Ï§Î
+¥i¬Ý¨£1945~1955¶¡¤p¨à³Â·ôªº¤H¼Æ¸û¦h ±q1955¦~¦³¬Ì­]«á¤H¼Æ´N¦³«ÜÅãµÛªº¤U­°¨Ã¸û¤Ö¶W¹L50¤H¤F
